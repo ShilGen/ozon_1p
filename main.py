@@ -5,16 +5,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def get_access_token():
     url = "https://api-performance.ozon.ru/api/client/token"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
+    headers = {"Content-Type": "application/json", "Accept": "application/json"}
     payload = {
         "client_id": os.getenv("client_id"),
         "client_secret": os.getenv("client_secret"),
-        "grant_type": "client_credentials"
+        "grant_type": "client_credentials",
     }
 
     try:
@@ -35,12 +33,14 @@ def get_access_token():
         return None
 
 
-def get_campaign_details(access_token, campaign_id=None, adv_object_type=None, state=None):
+def get_campaign_details(
+    access_token, campaign_id=None, adv_object_type=None, state=None
+):
     url = "https://api-performance.ozon.ru/api/client/campaign"
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        "Accept": "application/json",
     }
     params = {}
     if campaign_id:
@@ -64,7 +64,9 @@ if __name__ == "__main__":
     campaign_id = None  # Optional
     adv_object_type = None  # Optional
     state = None  # Optional
-    campaign_details = get_campaign_details(access_token, campaign_id, adv_object_type, state)
+    campaign_details = get_campaign_details(
+        access_token, campaign_id, adv_object_type, state
+    )
     if campaign_details:
-        with open('data.json', 'w') as file:
+        with open("data.json", "w") as file:
             json.dump(campaign_details, file)
